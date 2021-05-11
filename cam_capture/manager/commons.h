@@ -4,7 +4,7 @@
 #include <vector>
 #include "../camera/commons.h"
 
-typedef std::vector<Frame>          CamsVector;
-typedef std::vector<CamsVector>     FramesVector;
+typedef std::vector<Frame>            SyncedFrames;
+typedef std::vector<SyncedFrames>     FramesVector;
 
 #endif // MANAGER_COMMONS_H
