@@ -4,11 +4,25 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(cam_template)
 
-file(GLOB SOURCE_FILES CONFIGURE_DEPENDS "*.h" "*.cpp")
+SET(SOURCES main.cpp
+        cam_capture/camera/fake/fake.cpp
+        cam_capture/camera/web/web.cpp
+        cam_capture/manager/web/web.cpp
+        cam_capture/utility/buffer.cpp)
 
-include_directories("3rd_party/libv4l2cpp/inc")
+SET(HEADERS cam_capture/camera/fake/fake.h
+        cam_capture/camera/web/web.h
+        cam_capture/camera/commons.h
+        cam_capture/camera/icamera.h
+        cam_capture/manager/commons.h
+        cam_capture/manager/imanager.h
+        cam_capture/manager/web/web.h
+        cam_capture/utility/buffer.h
+        profile.h)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} )
+include_directories("${CMAKE_SOURCE_DIR}/3rd_party/libv4l2cpp/inc")
 
-target_link_libraries(${PROJECT_NAME} 3rd_party/libv4l2cpp/libv4l2wrapper.a
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/3rd_party/libv4l2cpp/libv4l2wrapper.a
         pthread)
