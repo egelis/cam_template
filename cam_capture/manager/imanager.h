@@ -13,7 +13,7 @@ public:
     virtual std::vector<Metadata> getCamsList() = 0;
 
     virtual FramesVector getFrames(size_t frames) = 0;
-    virtual CamsVector getFrame() = 0;
+    virtual SyncedFrames getFrame() = 0;
 
     virtual ~ICamManager(){}
 };

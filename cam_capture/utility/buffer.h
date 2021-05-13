@@ -6,7 +6,7 @@
 
 
 struct CamBuffer{
-    std::vector<uint8_t> data;
+    std::vector<std::byte> data;
 //    std::mutex lock;
 };
 

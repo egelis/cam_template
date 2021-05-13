@@ -32,11 +32,11 @@ FramesVector WebCamManager::getFrames(size_t frames)
     return res;
 }
 
-CamsVector WebCamManager::getFrame()
+SyncedFrames WebCamManager::getFrame()
 {
     const size_t size = this->cams.size();
 
-    CamsVector res(size);
+    SyncedFrames res(size);
 
     for (size_t cam = 0; cam < size; cam++){
         // TODO: finish

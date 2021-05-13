@@ -11,9 +11,9 @@ public:
     std::vector<Metadata> getCamsList() override;
 
     FramesVector getFrames(size_t frames) override;
-    CamsVector getFrame() override;
+    SyncedFrames getFrame() override;
 
-    ~WebCamManager() override {}
+    ~WebCamManager() override = default;
 
 private:
     std::vector<std::unique_ptr<ICamera>> cams;

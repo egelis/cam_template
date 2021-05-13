@@ -3,11 +3,19 @@
 
 #include "../icamera.h"
 
-class WebCamera : public ICamera{
+#include<vector>
+#include <memory>
+
+class WebCamera : public ICamera {
+private:
+    V4l2Capture *videoCapture;
+    size_t buffer_size;
 public:
-    WebCamera(Metadata descr);
+    explicit WebCamera(const Metadata &desc);
+
     Frame getNewFrame() override;
-    ~WebCamera(){};
+
+    ~WebCamera() override = default;
 };
 
 #endif // WEB_CAMERA_H
