@@ -3,45 +3,42 @@
 #include "cam_capture/manager/web/web.h"
 #include "cam_capture/camera/fake/fake.h"
 #include "cam_capture/camera/web/web.h"
+#include "cam_capture/file_handler/FileHandler.h"
 
-#include <fstream>
+#include "profile.h"
 
 using namespace std;
-
-void saveToFile(const string &file_name, Frame frame) {
-    ofstream outFile(file_name, ios::binary | ios::app);
-
-    auto buffer{frame->data};
-    outFile.write(reinterpret_cast<char *>(buffer.data()),
-                  buffer.size() * sizeof(buffer[0]));
-
-    outFile.close();
-}
 
 int main() {
     WebCamManager manager;
     {
-        Metadata meta;
-        meta.dev_path = "/dev/video0";
-        meta.width = 640;
-        meta.height = 480;
-        meta.format = V4L2_PIX_FMT_YUYV;
-        meta.framerate = 30;
-        meta.additional = "Integrated camera";
+        LOG_DURATION("video2 initialization")
+        {
+            Metadata meta;
+            meta.dev_path = "/dev/video2";
+            meta.width = 640;
+            meta.height = 480;
+            meta.format = V4L2_PIX_FMT_YUYV;
+            meta.framerate = 30;
+            meta.additional = "Web camera";
 
-        manager.addCamera(std::make_unique<WebCamera>(meta));
+            manager.addCamera(std::make_unique<WebCamera>(meta));
+        }
     }
 
     {
-        Metadata meta;
-        meta.dev_path = "/dev/video2";
-        meta.width = 640;
-        meta.height = 480;
-        meta.format = V4L2_PIX_FMT_YUYV;
-        meta.framerate = 30;
-        meta.additional = "Web camera";
+        LOG_DURATION("video0 initialization")
+        {
+            Metadata meta;
+            meta.dev_path = "/dev/video0";
+            meta.width = 640;
+            meta.height = 480;
+            meta.format = V4L2_PIX_FMT_YUYV;
+            meta.framerate = 30;
+            meta.additional = "Integrated camera";
 
-        manager.addCamera(std::make_unique<WebCamera>(meta));
+            manager.addCamera(std::make_unique<WebCamera>(meta));
+        }
     }
 
     /*{
@@ -59,17 +56,16 @@ int main() {
                   << c.additional << "'" << std::endl;
     }
 
-    /*auto frame = manager.getFrame();
-    for (size_t cam = 0; cam < cams.size(); cam++) {
-        saveToFile("camera" + to_string(cam) + ".raw", move(frame[cam]));
-    }*/
+    {
+        LOG_DURATION("getFrame and saveFrame")
+        auto frame = manager.getFrame();
+        FileHandler::saveFrame(frame);
+    }
 
-    auto frames = manager.getFrames(300);
-
-    for (auto &frame : frames) {
-        for (size_t cam = 0; cam < cams.size(); cam++) {
-            saveToFile("camera" + to_string(cam) + ".raw", move(frame[cam]));
-        }
+    {
+        LOG_DURATION("getFrames(300) and saveFrames");
+        auto frames = manager.getFrames(300);
+        FileHandler::saveFrames(frames);
     }
 
     return 0;

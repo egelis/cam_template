@@ -8,7 +8,8 @@ SET(SOURCES main.cpp
         cam_capture/camera/fake/fake.cpp
         cam_capture/camera/web/web.cpp
         cam_capture/manager/web/web.cpp
-        cam_capture/utility/buffer.cpp)
+        cam_capture/utility/buffer.cpp
+        cam_capture/file_handler/FileHandler.cpp)
 
 SET(HEADERS cam_capture/camera/fake/fake.h
         cam_capture/camera/web/web.h
@@ -18,6 +19,7 @@ SET(HEADERS cam_capture/camera/fake/fake.h
         cam_capture/manager/imanager.h
         cam_capture/manager/web/web.h
         cam_capture/utility/buffer.h
+        cam_capture/file_handler/FileHandler.h
         profile.h)
 
 include_directories("${CMAKE_SOURCE_DIR}/3rd_party/libv4l2cpp/inc")

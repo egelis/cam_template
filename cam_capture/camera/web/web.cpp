@@ -20,7 +20,7 @@ WebCamera::WebCamera(const Metadata &desc) {
 
 Frame WebCamera::getNewFrame() {
     std::vector<std::byte> buffer(buffer_size);
-    timeval timeout{100}; // Прочитать про timeval
+    timeval timeout{100};
 
     videoCapture->isReadable(&timeout);
     videoCapture->read(reinterpret_cast<char *>(buffer.data()),
