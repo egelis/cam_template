@@ -4,6 +4,9 @@
 #include "../imanager.h"
 #include "../../camera/icamera.h"
 
+#include <future>
+#include <vector>
+
 class WebCamManager : public ICamManager {
 public:
     bool addCamera(std::unique_ptr<ICamera> cam) override;

@@ -56,11 +56,11 @@ int main() {
                   << c.additional << "'" << std::endl;
     }
 
-    {
-        LOG_DURATION("getFrame and saveFrame")
-        auto frame = manager.getFrame();
-        FileHandler::saveFrame(frame);
-    }
+//    {
+//        LOG_DURATION("getFrame and saveFrame")
+//        auto frame = manager.getFrame();
+//        FileHandler::saveFrame(frame);
+//    }
 
     {
         LOG_DURATION("getFrames(300) and saveFrames");
