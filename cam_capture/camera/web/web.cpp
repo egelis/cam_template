@@ -1,12 +1,7 @@
 #include "web.h"
 
-WebCamera::WebCamera(const Metadata &desc) {
+WebCamera::WebCamera(const Metadata &desc) : videoCapture(nullptr) {
     this->meta = desc;
-
-    V4L2DeviceParameters param(meta.dev_path.c_str(), meta.format, meta.width,
-                               meta.height, meta.framerate, meta.ioType);
-
-    videoCapture = V4l2Capture::create(param);
 
     switch (meta.format) {
         // Can add more formats
@@ -16,6 +11,13 @@ WebCamera::WebCamera(const Metadata &desc) {
         default:
             throw std::runtime_error("Unknown format. Unable to get buffer size.");
     }
+}
+
+void WebCamera::init() {
+    V4L2DeviceParameters param(meta.dev_path.c_str(), meta.format, meta.width,
+                               meta.height, meta.framerate, meta.ioType);
+
+    videoCapture = V4l2Capture::create(param);
 }
 
 Frame WebCamera::getNewFrame() {

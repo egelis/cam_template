@@ -12,33 +12,27 @@ using namespace std;
 int main() {
     WebCamManager manager;
     {
-        LOG_DURATION("video2 initialization")
-        {
-            Metadata meta;
-            meta.dev_path = "/dev/video2";
-            meta.width = 640;
-            meta.height = 480;
-            meta.format = V4L2_PIX_FMT_YUYV;
-            meta.framerate = 30;
-            meta.additional = "Web camera";
+        Metadata meta;
+        meta.dev_path = "/dev/video2";
+        meta.width = 640;
+        meta.height = 480;
+        meta.format = V4L2_PIX_FMT_YUYV;
+        meta.framerate = 30;
+        meta.additional = "Web camera";
 
-            manager.addCamera(std::make_unique<WebCamera>(meta));
-        }
+        manager.addCamera(std::make_unique<WebCamera>(meta));
     }
 
     {
-        LOG_DURATION("video0 initialization")
-        {
-            Metadata meta;
-            meta.dev_path = "/dev/video0";
-            meta.width = 640;
-            meta.height = 480;
-            meta.format = V4L2_PIX_FMT_YUYV;
-            meta.framerate = 30;
-            meta.additional = "Integrated camera";
+        Metadata meta;
+        meta.dev_path = "/dev/video0";
+        meta.width = 640;
+        meta.height = 480;
+        meta.format = V4L2_PIX_FMT_YUYV;
+        meta.framerate = 30;
+        meta.additional = "Integrated camera";
 
-            manager.addCamera(std::make_unique<WebCamera>(meta));
-        }
+        manager.addCamera(std::make_unique<WebCamera>(meta));
     }
 
     /*{
@@ -49,6 +43,11 @@ int main() {
         manager.addCamera(std::make_unique<FakeCamera>(meta));
     }*/
 
+    {
+        LOG_DURATION("Cameras initialization");
+        manager.initCameras();
+    }
+
     auto cams = manager.getCamsList();
     std::cout << "\n\nList of cameras:" << std::endl;
     for (const auto &c : cams) {
@@ -56,11 +55,11 @@ int main() {
                   << c.additional << "'" << std::endl;
     }
 
-//    {
-//        LOG_DURATION("getFrame and saveFrame")
-//        auto frame = manager.getFrame();
-//        FileHandler::saveFrame(frame);
-//    }
+    {
+        LOG_DURATION("getFrame and saveFrame")
+        auto frame = manager.getFrame();
+        FileHandler::saveFrame(frame);
+    }
 
     {
         LOG_DURATION("getFrames(300) and saveFrames");

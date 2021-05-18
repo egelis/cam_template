@@ -3,12 +3,15 @@
 
 #include "../icamera.h"
 
-class FakeCamera : public ICamera{
+class FakeCamera : public ICamera {
 public:
-    FakeCamera(Metadata descr);
+    explicit FakeCamera(const Metadata &desc);
+
     Frame getNewFrame() override;
 
-    ~FakeCamera(){};
+    void init() override;
+
+    ~FakeCamera() override = default;
 };
 
 #endif // FAKE_CAMERA_H

@@ -15,6 +15,8 @@ public:
 
     Frame getNewFrame() override;
 
+    void init() override;
+
     ~WebCamera() override = default;
 };
 

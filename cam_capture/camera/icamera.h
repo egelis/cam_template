@@ -23,6 +23,8 @@ struct ICamera {
 
     virtual ~ICamera() = default;
 
+    virtual void init() = 0;
+
     Metadata meta;
 };
 

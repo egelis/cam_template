@@ -1,5 +1,7 @@
 #include "web.h"
 
+#include <iostream>
+
 bool WebCamManager::addCamera(std::unique_ptr<ICamera> cam) {
     cams.push_back(std::move(cam));
 
@@ -44,19 +46,17 @@ SyncedFrames WebCamManager::getFrame() {
         res[cam] = futures[cam].get();
     }
 
-    // One thread
-    /*const size_t size = this->cams.size();
-    SyncedFrames res(size);
-
-    for (size_t cam = 0; cam < size; cam++) {
-        std::chrono::time_point<std::chrono::system_clock> now =
-                std::chrono::system_clock::now();
-        auto duration = now.time_since_epoch();
-        std::cout << cams[cam]->meta.additional << ": "
-                  << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() << "\n";
-
-        res[cam] = std::move(cams[cam]->getNewFrame());
-    }*/
-
     return res;
+}
+
+void WebCamManager::initCameras(State state) {
+    if (state == State::ASYNC) {
+        std::vector<std::future<void>> futures;
+        for (const auto &cam: cams)
+            futures.push_back(std::async([&] { cam->init(); }));
+    }
+    else {
+        for (const auto &cam: cams)
+            cam->init();
+    }
 }

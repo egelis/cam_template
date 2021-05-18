@@ -1,12 +1,16 @@
 #include "fake.h"
 
-FakeCamera::FakeCamera(Metadata descr)
+FakeCamera::FakeCamera(const Metadata &desc)
 {
-    this->meta = descr;
+    this->meta = desc;
 }
 
 Frame FakeCamera::getNewFrame()
 {
     // TODO: generate
     return {};
+}
+
+void FakeCamera::init() {
+
 }

@@ -4,6 +4,11 @@
 #include <vector>
 #include "../camera/commons.h"
 
+enum class State {
+    SYNC,
+    ASYNC
+};
+
 typedef std::vector<Frame>            SyncedFrames;
 typedef std::vector<SyncedFrames>     FramesVector;
 
