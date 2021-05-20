@@ -8,8 +8,8 @@
 
 class WebCamera : public ICamera {
 private:
-    V4l2Capture *videoCapture;
-    size_t buffer_size;
+    V4l2Capture *m_videoCapture;
+    size_t m_buffer_size;
 public:
     explicit WebCamera(const Metadata &desc);
 

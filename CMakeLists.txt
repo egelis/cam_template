@@ -9,7 +9,8 @@ SET(SOURCES main.cpp
         cam_capture/camera/web/web.cpp
         cam_capture/manager/web/web.cpp
         cam_capture/utility/buffer.cpp
-        cam_capture/file_handler/FileHandler.cpp)
+        cam_capture/file_saver/saver/saver.cpp
+        cam_capture/file_saver/str_oneCamOneFile/OCOF_Save.cpp)
 
 SET(HEADERS cam_capture/camera/fake/fake.h
         cam_capture/camera/web/web.h
@@ -19,7 +20,10 @@ SET(HEADERS cam_capture/camera/fake/fake.h
         cam_capture/manager/imanager.h
         cam_capture/manager/web/web.h
         cam_capture/utility/buffer.h
-        cam_capture/file_handler/FileHandler.h
+        cam_capture/file_saver/istrategy.h
+        cam_capture/file_saver/saver/saver.h
+        cam_capture/file_saver/commons.h
+        cam_capture/file_saver/str_oneCamOneFile/OCOF_Save.h
         profile.h)
 
 include_directories("${CMAKE_SOURCE_DIR}/3rd_party/libv4l2cpp/inc")

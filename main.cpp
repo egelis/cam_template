@@ -3,7 +3,9 @@
 #include "cam_capture/manager/web/web.h"
 #include "cam_capture/camera/fake/fake.h"
 #include "cam_capture/camera/web/web.h"
-#include "cam_capture/file_handler/FileHandler.h"
+
+#include "cam_capture/file_saver/saver/saver.h"
+#include "cam_capture/file_saver/str_oneCamOneFile/OCOF_Save.h"
 
 #include "profile.h"
 
@@ -58,14 +60,19 @@ int main() {
     {
         LOG_DURATION("getFrame and saveFrame")
         auto frame = manager.getFrame();
-        FileHandler::saveFrame(frame);
+
+        FileSaver saver(new OCOF_Save);
+        saver.saveFrame(frame);
     }
 
     {
         LOG_DURATION("getFrames(300) and saveFrames");
         auto frames = manager.getFrames(300);
-        FileHandler::saveFrames(frames);
+
+        FileSaver saver(new OCOF_Save);
+        saver.saveFrames(frames);
     }
+
 
     return 0;
 }
