@@ -58,21 +58,26 @@ int main() {
     }
 
     {
-        LOG_DURATION("getFrame and saveFrame")
+        LOG_DURATION("getFrame")
         auto frame = manager.getFrame();
 
-        FileSaver saver(new OCOF_Save);
-        saver.saveFrame(frame);
+        {
+            LOG_DURATION("saveFrame")
+            FileSaver saver(new OCOF_Save);
+            saver.saveFrame(frame);
+        }
     }
 
     {
-        LOG_DURATION("getFrames(300) and saveFrames");
+        LOG_DURATION("getFrames(300)");
         auto frames = manager.getFrames(300);
 
-        FileSaver saver(new OCOF_Save);
-        saver.saveFrames(frames);
+        {
+            LOG_DURATION("saveFrames(300)");
+            FileSaver saver(new OCOF_Save);
+            saver.saveFrames(frames);
+        }
     }
-
 
     return 0;
 }

@@ -22,7 +22,7 @@ public:
     ~WebCamManager() override = default;
 
 private:
-    std::vector<std::unique_ptr<ICamera>> cams;
+    std::vector<std::unique_ptr<ICamera>> m_cams;
 };
 
 #endif // WEB_MANAGER_H

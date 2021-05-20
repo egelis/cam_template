@@ -3,7 +3,7 @@
 #include <iostream>
 
 bool WebCamManager::addCamera(std::unique_ptr<ICamera> cam) {
-    cams.push_back(std::move(cam));
+    m_cams.push_back(std::move(cam));
 
     return true;
 }
@@ -11,7 +11,7 @@ bool WebCamManager::addCamera(std::unique_ptr<ICamera> cam) {
 std::vector<Metadata> WebCamManager::getCamsList() {
     std::vector<Metadata> result;
 
-    for (const auto &c : this->cams) {
+    for (const auto &c : this->m_cams) {
         result.push_back(c->meta);
     }
 
@@ -31,7 +31,7 @@ FramesVector WebCamManager::getFrames(size_t frames) {
 SyncedFrames WebCamManager::getFrame() {
     std::vector<std::future<Frame>> futures;
 
-    for (const auto &cam: cams) {
+    for (const auto &cam: m_cams) {
         futures.push_back(
                 std::async([&] {
                     return std::move(cam->getNewFrame());
@@ -39,7 +39,7 @@ SyncedFrames WebCamManager::getFrame() {
         );
     }
 
-    const size_t size = this->cams.size();
+    const size_t size = this->m_cams.size();
     SyncedFrames res(size);
 
     for (size_t cam = 0; cam < size; cam++) {
@@ -52,11 +52,11 @@ SyncedFrames WebCamManager::getFrame() {
 void WebCamManager::initCameras(State state) {
     if (state == State::ASYNC) {
         std::vector<std::future<void>> futures;
-        for (const auto &cam: cams)
+        for (const auto &cam: m_cams)
             futures.push_back(std::async([&] { cam->init(); }));
     }
     else {
-        for (const auto &cam: cams)
+        for (const auto &cam: m_cams)
             cam->init();
     }
 }
