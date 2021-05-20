@@ -1,6 +1,6 @@
-#include "FileHandler.h"
+#include "OCOF_Save.h"
 
-void FileHandler::saveFrame(const SyncedFrames &frame) {
+void OCOF_Save::saveFrame(const SyncedFrames &frame) {
     size_t nums_of_cameras = frame.size();
 
     for (size_t cam = 0; cam < nums_of_cameras; cam++)
@@ -15,7 +15,7 @@ void FileHandler::saveFrame(const SyncedFrames &frame) {
     }
 }
 
-void FileHandler::saveFrames(const FramesVector &frames) {
+void OCOF_Save::saveFrames(const FramesVector &frames) {
     size_t nums_of_frames = frames.size();
     size_t nums_of_cameras = frames[0].size();
 
