@@ -1,7 +1,7 @@
 #ifndef CAM_TEMPLATE_ISTRATEGY_H
 #define CAM_TEMPLATE_ISTRATEGY_H
 
-#include "commons.h"
+#include "../commons.h"
 
 class ISaveStrategy {
 public:

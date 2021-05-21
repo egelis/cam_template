@@ -4,8 +4,8 @@
 #include "cam_capture/camera/fake/fake.h"
 #include "cam_capture/camera/web/web.h"
 
-#include "cam_capture/file_saver/saver/saver.h"
-#include "cam_capture/file_saver/str_oneCamOneFile/OCOF_Save.h"
+#include "cam_capture/file_saver/saver.h"
+#include "cam_capture/file_saver/strategies/oneCamOneFile/OCOF_Save.h"
 
 #include "profile.h"
 
@@ -13,7 +13,7 @@ using namespace std;
 
 int main() {
     WebCamManager manager;
-    {
+    /*{
         Metadata meta;
         meta.dev_path = "/dev/video2";
         meta.width = 640;
@@ -23,7 +23,7 @@ int main() {
         meta.additional = "Web camera";
 
         manager.addCamera(std::make_unique<WebCamera>(meta));
-    }
+    }*/
 
     {
         Metadata meta;
@@ -63,7 +63,7 @@ int main() {
 
         {
             LOG_DURATION("saveFrame")
-            FileSaver saver(new OCOF_Save);
+            FileSaver saver(make_unique<OCOF_Save>());
             saver.saveFrame(frame);
         }
     }
@@ -74,7 +74,7 @@ int main() {
 
         {
             LOG_DURATION("saveFrames(300)");
-            FileSaver saver(new OCOF_Save);
+            FileSaver saver(make_unique<OCOF_Save>());
             saver.saveFrames(frames);
         }
     }
