@@ -10,11 +10,11 @@ public:
 
     virtual std::vector<Metadata> getCamsList() = 0;
 
-    virtual void initCameras(State state) = 0;
+    virtual void initCameras() = 0;
 
-    virtual FramesVector getFrames(size_t frames) = 0;
+    virtual Cams getFrames(size_t frames) = 0;
 
-    virtual SyncedFrames getFrame() = 0;
+    virtual Frame getFrame() = 0;
 
     virtual ~ICamManager() {}
 };

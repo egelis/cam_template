@@ -6,7 +6,7 @@
                   static_cast<std::streamsize>(buffer.size() * sizeof(buffer[0])));   \
 
 
-void OCOF_Save::saveFrame(const SyncedFrames &frame) {
+/*void OCOF_Save::saveFrame(const SyncedFrames &frame) {
     size_t nums_of_cameras = frame.size();
 
     // Open files
@@ -45,4 +45,4 @@ void OCOF_Save::saveFrames(const FramesVector &frames) {
     for (auto &file: outFiles) {
         file.close();
     }
-}
+}*/

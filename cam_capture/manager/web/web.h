@@ -13,11 +13,11 @@ public:
 
     std::vector<Metadata> getCamsList() override;
 
-    void initCameras(State state = State::ASYNC) override;
+    void initCameras() override;
 
-    FramesVector getFrames(size_t frames) override;
+    Cams getFrames(size_t frames) override;
 
-    SyncedFrames getFrame() override;
+    Frame getFrame() override;
 
     ~WebCamManager() override = default;
 
