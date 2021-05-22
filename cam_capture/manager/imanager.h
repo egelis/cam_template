@@ -14,8 +14,6 @@ public:
 
     virtual Cams getFrames(size_t frames) = 0;
 
-    virtual Frame getFrame() = 0;
-
     virtual ~ICamManager() {}
 };
 

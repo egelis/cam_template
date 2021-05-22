@@ -17,8 +17,6 @@ public:
 
     Cams getFrames(size_t frames) override;
 
-    Frame getFrame() override;
-
     ~WebCamManager() override = default;
 
 private:

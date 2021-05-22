@@ -9,8 +9,6 @@
 
 #include "profile.h"
 
-#include <fstream>
-
 using namespace std;
 
 int main() {
@@ -59,45 +57,15 @@ int main() {
                   << c.additional << "'" << std::endl;
     }
 
-    /*{
-        LOG_DURATION("getFrame")
-        auto frame = manager.getFrame();
-
-        {
-            LOG_DURATION("saveFrame")
-            FileSaver saver(make_unique<OCOF_Save>());
-            saver.saveFrame(frame);
-        }
-    }*/
-
     {
         LOG_DURATION("getFrames(300)");
         auto cameras = manager.getFrames(300);
 
-        std::vector<std::ofstream> outFiles(cams.size());
-        for (size_t num = 0; num < cams.size(); num++) {
-            outFiles[num].open("frames" + std::to_string(num) + ".raw", std::ios::binary);
-        }
-
-        for (const auto &[name, frames]: cameras) {
-            static int num = 0;
-            for (const auto &frame: frames) {
-                auto buffer = frame->data;
-                outFiles[num].write(reinterpret_cast<char *>(buffer.data()),
-                                      static_cast<std::streamsize>(buffer.size() * sizeof(buffer[0])));
-            }
-            num++;
-        }
-
-        for (auto &file: outFiles) {
-            file.close();
-        }
-
-        /*{
+        {
             LOG_DURATION("saveFrames(300)");
             FileSaver saver(make_unique<OCOF_Save>());
-            saver.saveFrames(frames);
-        }*/
+            saver.saveFrames(cameras, "frames.raw");
+        }
     }
 
     return 0;
