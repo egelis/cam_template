@@ -6,6 +6,7 @@
 
 #include "cam_capture/file_saver/saver.h"
 #include "cam_capture/file_saver/strategies/oneCamOneFile/OCOF_Save.h"
+#include "cam_capture/file_saver/strategies/oneCamManyFiles//OCMF_Save.h"
 
 #include "profile.h"
 
@@ -64,9 +65,15 @@ int main() {
     }
 
     {
-        LOG_DURATION("saveFrames(300)");
+        LOG_DURATION("saveFrames(300) OCOF");
         FileSaver saver(make_unique<OCOF_Save>());
-        saver.saveFrames(cams, "");
+        saver.saveFrames(cams, "Frames/OCOF/");
+    }
+
+    {
+        LOG_DURATION("saveFrames(300) OCMF");
+        FileSaver saver(make_unique<OCMF_Save>());
+        saver.saveFrames(cams, "Frames/OCMF/");
     }
 
     return 0;
