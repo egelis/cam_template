@@ -15,9 +15,7 @@ public:
 
     void setStrategy(std::unique_ptr<ISaveStrategy> strategy);
 
-    /*void saveFrame(const SyncedFrames &frame);
-
-    void saveFrames(const FramesVector &frames);*/
+    void saveFrames(const Cams &cams, const std::string &path);
 };
 
 

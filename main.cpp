@@ -50,22 +50,23 @@ int main() {
         manager.initCameras();
     }
 
-    auto cams = manager.getCamsList();
+    auto cams_list = manager.getCamsList();
     std::cout << "\n\nList of cameras:" << std::endl;
-    for (const auto &c : cams) {
+    for (const auto &c : cams_list) {
         std::cout << "Metadata. dev_path: '" << c.dev_path << "', additional: '"
                   << c.additional << "'" << std::endl;
     }
 
+    Cams cams;
     {
         LOG_DURATION("getFrames(300)");
-        auto cameras = manager.getFrames(300);
+        cams = manager.getFrames(300);
+    }
 
-        {
-            LOG_DURATION("saveFrames(300)");
-            FileSaver saver(make_unique<OCOF_Save>());
-            saver.saveFrames(cameras, "frames.raw");
-        }
+    {
+        LOG_DURATION("saveFrames(300)");
+        FileSaver saver(make_unique<OCOF_Save>());
+        saver.saveFrames(cams, "");
     }
 
     return 0;

@@ -21,13 +21,14 @@ Cams WebCamManager::getFrames(size_t frames) {
 
     // allocate memory and set name of camera
     for (int num = 0; auto &r : res) {
-        r.first = m_cams[num++]->meta.dev_path;
+        auto dev_path = m_cams[num++]->meta.dev_path;
+        r.first = dev_path.substr(dev_path.find("video"), dev_path.size());
         r.second.resize(frames);
     }
 
     // for each frame
     for (size_t frame = 0; frame < frames; frame++) {
-        // create vector of features (1 future - 1 camera)
+        // create vector of futures (1 future - 1 camera)
         std::vector<std::future<Frame>> futures;
 
         // start threads of getting frames from all cameras
@@ -35,7 +36,7 @@ Cams WebCamManager::getFrames(size_t frames) {
             futures.push_back(std::async([&] { return std::move(cam->getNewFrame()); }));
         }
 
-        // get feature results
+        // get future results
         for (size_t cam = 0; cam < m_cams.size(); cam++) {
             res[cam].second[frame] = futures[cam].get();
         }

@@ -2,6 +2,7 @@
 #define CAM_TEMPLATE_OCOF_SAVE_H
 
 #include <fstream>
+#include <future>
 #include <vector>
 
 #include "../istrategy.h"
@@ -10,11 +11,8 @@ class OCOF_Save : public ISaveStrategy {
 public:
     ~OCOF_Save() override = default;
 
-    /* Saving 1 frame in separate files for each camera *//*
-    void saveFrame(const SyncedFrames &frame) override;
-
-    *//* Saving frames in separate files for each camera *//*
-    void saveFrames(const FramesVector &frames) override*/;
+    /*Saving frames in separate files for each camera */
+    void saveFrames(const Cams &cams, const std::string &path) override;
 };
 
 
