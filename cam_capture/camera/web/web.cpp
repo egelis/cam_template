@@ -4,7 +4,7 @@ WebCamera::WebCamera(const Metadata &desc) : m_videoCapture(nullptr) {
     this->meta = desc;
 
     switch (meta.format) {
-        // Can add more formats
+        // More formats can be added
         case V4L2_PIX_FMT_YUYV:
             m_buffer_size = meta.height * meta.width * 2;
             break;
@@ -18,15 +18,23 @@ void WebCamera::init() {
                                meta.height, meta.framerate, meta.ioType);
 
     m_videoCapture = V4l2Capture::create(param);
+
+    warmup();
 }
 
 Frame WebCamera::getNewFrame() {
     std::vector<std::byte> buffer(m_buffer_size);
-    timeval timeout{100};
+    timeval timeout{10};
 
     m_videoCapture->isReadable(&timeout);
     m_videoCapture->read(reinterpret_cast<char *>(buffer.data()),
                          buffer.size());
 
     return std::make_unique<CamBuffer>(CamBuffer{buffer});
+}
+
+void WebCamera::warmup() {
+    for (auto i = 0; i < 10; i++) {
+        getNewFrame();
+    }
 }

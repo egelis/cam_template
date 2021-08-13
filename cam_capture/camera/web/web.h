@@ -10,6 +10,9 @@ class WebCamera : public ICamera {
 private:
     V4l2Capture *m_videoCapture;
     size_t m_buffer_size;
+
+    void warmup();
+
 public:
     explicit WebCamera(const Metadata &desc);
 
